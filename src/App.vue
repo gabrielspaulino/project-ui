@@ -1,48 +1,36 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-  <div v-if="users">
-      <h5>Users</h5>
-      <ul class="mb-0">
-          <li v-for="user in users" :key="user.id">{{user}}</li>
-      </ul>
-  </div>
-  <div v-if="orders">
-      <h5>Orders</h5>
-      <ul class="mb-0">
-          <li v-for="order in orders" :key="order.id">{{order}}</li>
-      </ul>
-  </div>
-  <div v-if="products">
-      <h5>Products</h5>
-      <ul class="mb-0">
-          <li v-for="product in products" :key="product.id">{{product}}</li>
-      </ul>
-  </div>
-  <div v-if="categories">
-      <h5>Categories</h5>
-      <ul class="mb-0">
-          <li v-for="category in categories" :key="category.id">{{category}}</li>
-      </ul>
+  <h1>Products</h1>
+  <div class="productsSection" v-for="product in products" :key="product.id">
+    <ProductCard :product="product"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ProductCard from './components/ProductCard.vue'
 
+let response = await fetch('http://localhost:8080/users');
+const usersResponse = await response.json();
+response = await fetch('http://localhost:8080/orders');
+const ordersResponse = await response.json();
+response = await fetch('http://localhost:8080/products');
+const productsResponse = await response.json();
+response = await fetch('http://localhost:8080/categories');
+const categoriesResponse = await response.json();
+
+console.log(productsResponse)
 export default {
-  name: 'App',
-  data(){
-    return{
-      users: HelloWorld.props.users,
-      orders: HelloWorld.props.orders,
-      products: HelloWorld.props.products,
-      categories: HelloWorld.props.categories
+    name: "App",
+    data() {
+        return {
+            users: usersResponse,
+            orders: ordersResponse,
+            products: productsResponse,
+            categories: categoriesResponse
+        };
+    },
+    components: { 
+        ProductCard
     }
-  },
-  components: {
-    HelloWorld
-  }
 }
 </script>
 
@@ -54,5 +42,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.productsSection {
+    display: flex inline;
+    margin: 10px;
 }
 </style>

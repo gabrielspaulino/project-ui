@@ -1,38 +1,11 @@
 <template>
-  <h1>Products</h1>
-  <div class="productsSection" v-for="product in products" :key="product.id">
-    <ProductCard :product="product"/>
-  </div>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> |
+    <router-link to="/login">Login</router-link>
+  </nav>
+  <router-view/>
 </template>
-
-<script>
-import ProductCard from './components/ProductCard.vue'
-
-let response = await fetch('http://localhost:8080/users');
-const usersResponse = await response.json();
-response = await fetch('http://localhost:8080/orders');
-const ordersResponse = await response.json();
-response = await fetch('http://localhost:8080/products');
-const productsResponse = await response.json();
-response = await fetch('http://localhost:8080/categories');
-const categoriesResponse = await response.json();
-
-console.log(productsResponse)
-export default {
-    name: "App",
-    data() {
-        return {
-            users: usersResponse,
-            orders: ordersResponse,
-            products: productsResponse,
-            categories: categoriesResponse
-        };
-    },
-    components: { 
-        ProductCard
-    }
-}
-</script>
 
 <style>
 #app {
@@ -41,11 +14,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 
-.productsSection {
-    display: flex inline;
-    margin: 10px;
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

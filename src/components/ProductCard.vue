@@ -1,5 +1,8 @@
 <template>
     <div class="productBox">
+      <img v-if="product.categories[0].id===1" src="../assets/eletronicsIcon.png">
+      <img v-if="product.categories[0].id===2" src="../assets/booksIcon.png">
+      <img v-if="product.categories[0].id===3" src="../assets/computersIcon.png">
         <h3>{{ product.name }}</h3>
         {{ product.description }} <br>
         R$ {{ product.price.toFixed(2).replace(".", ",") }} <br>
@@ -17,17 +20,31 @@ export default {
 </script>
 
 <style>
+h3 {
+  margin: 0px;
+}
+
+img {
+  filter: invert(1);
+  width: 30px;
+}
+
 .productBox {
   background-color: blueviolet;
   color: white;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
+  width: 300px;
+  height: 150px;
+  margin: 10px;
 }
 
 button {
   background-color: white;
+  font-size: 1em;
   color: blueviolet;
   border: none;
   border-radius: 5px;
+  margin-top: 10px;
 }
 </style>

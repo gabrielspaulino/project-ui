@@ -8,6 +8,11 @@
 </template>
 
 <style>
+#categoryName {
+  text-align: start;
+  padding-left: 10px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -26,6 +31,10 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: blueviolet;
+}
+
+select {
+  border: 0px;
 }
 </style>

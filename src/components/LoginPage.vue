@@ -1,7 +1,6 @@
 <template>
     <div class="box">
       <div class="banner_high">
-        <!--<img src="../assets/logo.svg" alt="">-->
         <div class="language">
         <div class="flag"><img src="../assets/booksIcon.png" alt=""></div>
         <div class="flag active"><img src="../assets/booksIcon.png" alt=""></div>
@@ -33,9 +32,7 @@
       </div>
     
     <div>
-      <button class="log" ref="submitButton">
-        Entrar
-        </button>
+        <button class="log" ref="submitButton">Entrar</button>
     </div>
        
     <span>Ainda não tem conta? <a href="/signup">Se cadastrar</a> </span> 
@@ -45,11 +42,6 @@
     
     
 <script>
-import { createApp } from "vue";
-
-const app = createApp({})
-app.config.globalProperties.$logged = false
-
 let response = await fetch('http://localhost:8080/users');
 const usersResponse = await response.json();
 
@@ -71,13 +63,17 @@ export default {
         if (user.password !== this.password) {
           document.getElementById("loginInfo").textContent = "Wrong password"
         } else {
-          app.config.globalProperties.$logged = true
+          document.getElementById("loginInfo").textContent = ""
+          this.username = document.getElementById("emailInput").textContent = ""
+          this.password = document.getElementById("passwordInput").textContent = ""
+          document.cookie = user.id
+          window.location.href='/'
         }
       } else {
           document.getElementById("loginInfo").textContent = "E-mail not registered"
       }
     })
-  }
+  },
 };
 </script>
 

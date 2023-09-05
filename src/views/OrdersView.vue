@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-      <OrdersPage/>
+      <OrdersPage :cart="cart"/>
     </div>
   </template>
   
@@ -12,6 +12,9 @@
     name: 'OrdersView',
     components: {
         OrdersPage
+    },
+    props: {
+      cart: Boolean
     }
   }
   </script>

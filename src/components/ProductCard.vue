@@ -6,7 +6,6 @@
         <h3>{{ product.name }}</h3>
         {{ product.description }} <br>
         R$ {{ product.price.toFixed(2).replace(".", ",") }} <br>
-        <button>Add to cart</button>
     </div>
 </template>
 
@@ -35,7 +34,7 @@ img {
   padding: 20px;
   border-radius: 10px;
   width: 300px;
-  height: 150px;
+  height: 100px;
   margin: 10px;
 }
 

@@ -51,7 +51,6 @@ export default {
       userLoggedIn: false,
       username:"",
       password: "",
-      button: this.$refs.submitButton
     };
   },
   mounted() {

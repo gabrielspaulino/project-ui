@@ -25,7 +25,14 @@ const routes = [
   {
     path: '/orders',
     name: 'orders',
-    component: OrdersView
+    component: OrdersView,
+    props: { cart: false }
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: OrdersView,
+    props: { cart: true }
   },
 ]
 

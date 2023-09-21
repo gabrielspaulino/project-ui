@@ -26,13 +26,19 @@ const routes = [
     path: '/orders',
     name: 'orders',
     component: OrdersView,
-    props: { cart: false }
+    meta: {
+      cart: false,
+      cartItems: []
+    }
   },
   {
     path: '/cart',
     name: 'cart',
     component: OrdersView,
-    props: { cart: true }
+    meta: {
+      cart: true,
+      cartItems: []
+    }
   },
 ]
 

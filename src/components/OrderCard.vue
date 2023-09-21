@@ -1,13 +1,14 @@
 <template>
     <div class="orderBox">
-      <header id="orderDate">Order made in {{ order.moment.slice(0, 4) + "/" + order.moment.slice(5, 7) + "/" + order.moment.slice(8, 10) }} - ID: {{ order.id }}</header>
+      <header id="orderDate" v-if="order.orderStatus">Order made in {{ order.moment.slice(0, 4) + "/" + order.moment.slice(5, 7) + "/" + order.moment.slice(8, 10) }} - ID: {{ order.id }}</header>
+      <header id="orderDate" v-else>Item added to your cart</header>
       <br><div class="itemsSection" v-for="item in order.items" :key="item.id">
         {{ item.product.name }}<br>
         Quantity: {{ item.quantity }} <br>
         Price: ${{ item.price }} <br>
         Subtotal: ${{ item.subTotal }}<br><br>
       </div>
-      <br>Order status: {{ order.orderStatus.replace("_", " ") }}
+      <div v-if="order.orderStatus">Order status: {{ order.orderStatus.replace("_", " ") }}</div>
     </div>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
     <div v-if="user">
         Welcome, {{ user.name }} <br>
-        <router-link to="/cart"><button>My cart</button></router-link>
     </div>
     <div v-else>Hello, sign in to your account</div>
     <router-link to="/orders"><button id="ordersButton">My orders</button></router-link>
+    <router-link to="/cart"><button id="cartButton">My cart</button></router-link>
     <button id="logoutButton">Logout</button>
     <h1>Products</h1>
     <div class="categorySection" v-for="category in categories" :key="category.id">
@@ -20,7 +20,7 @@
 
 <script>
 import moment from 'moment';
-import ProductCard from './ProductCard.vue'
+import ProductCard from './ProductCard.vue';
 
 let response = await fetch('http://localhost:8080/products');
 const productsResponse = await response.json();
@@ -28,6 +28,7 @@ response = await fetch('http://localhost:8080/categories');
 const categoriesResponse = await response.json();
 response = await fetch('http://localhost:8080/users');
 const usersResponse = await response.json();
+window.cartItems = []
 
 export default {
     name: 'HomePage',
@@ -44,57 +45,42 @@ export default {
     methods: {
         async addToCart(product) {
             let user = usersResponse.find(user => user.id.toString() === document.cookie)
-            if (!user) {
-                window.alert("Please sign in to add items to your cart.")
-                return
-            }
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "http://localhost:8080/orders", true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.send(JSON.stringify({
-                "moment": moment.utc().format(),
-                "orderStatus": "IN_CART",
-                "client": {
-                    "id":1,
-                    "name":user.name,
-                    "email":user.email,
-                    "phone":user.phone,
-                    "password":user.password
-                },
-                "items": [
-                    {
+                window.cartItems.push(
+                {
+                    "moment": moment.utc().format(),
+                    "orderStatus": "",
+                    "client": {
+                        "id":user.id,
+                        "name":user.name,
+                        "email":user.email,
+                        "phone":user.phone,
+                        "password":user.password
+                    },
+                    "items": [{
                         "quantity":1,
-                        "price":product.price,
-                        "subTotal":product.price,
-                        "product":{
-                            "id":product.id,
-                            "name":product.name,
-                            "description":product.description,
-                            "price":product.price,
-                            "imgUrl":product.imgUrl,
-                            "categories":[
-                                {
-                                    "id":product.categories[0].id,
-                                    "name":product.categories[0].name
-                                }
-                            ]
-                        }
+                        "price": product.price,
+                        "product": product,
+                        "subTotal": product.price
+                    }],
+                    "payment": null,
+                    "total": function(items, price) {
+                        return items.reduce( function(a, b){
+                            return a + b[price];
+                        }, 0);
                     }
-                ],
-                "payment": null,
-                "total": product.price
-            }));
+                })
             window.alert("Product added to your cart.")
         }
     },
     mounted() {
-    document.getElementById("logoutButton").addEventListener("click", () => {
-        if (document.cookie != "null") {
-            document.cookie = null
-            window.location.reload()
-        }
-    })
-  }
+        window.cartItems = []
+        document.getElementById("logoutButton").addEventListener("click", () => {
+            if (document.cookie != "null") {
+                document.cookie = null
+                window.location.reload()
+            }
+        })
+    }
 }
 </script>
 

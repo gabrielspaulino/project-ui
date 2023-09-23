@@ -27,8 +27,7 @@ const routes = [
     name: 'orders',
     component: OrdersView,
     meta: {
-      cart: false,
-      cartItems: []
+      cart: false
     }
   },
   {
@@ -36,8 +35,7 @@ const routes = [
     name: 'cart',
     component: OrdersView,
     meta: {
-      cart: true,
-      cartItems: []
+      cart: true
     }
   },
 ]

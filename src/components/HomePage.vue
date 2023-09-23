@@ -20,7 +20,7 @@
 
 <script>
 import moment from 'moment';
-import ProductCard from './ProductCard.vue';
+import ProductCard from './ProductCard.vue'
 
 let response = await fetch('http://localhost:8080/products');
 const productsResponse = await response.json();
@@ -45,6 +45,7 @@ export default {
     methods: {
         async addToCart(product) {
             let user = usersResponse.find(user => user.id.toString() === document.cookie)
+            if (user) {
                 window.cartItems.push(
                 {
                     "moment": moment.utc().format(),
@@ -69,11 +70,13 @@ export default {
                         }, 0);
                     }
                 })
-            window.alert("Product added to your cart.")
+                window.alert("Product added to your cart.")
+            } else {
+                window.alert("Please sign in to add items to your cart.")
+            }
         }
     },
     mounted() {
-        window.cartItems = []
         document.getElementById("logoutButton").addEventListener("click", () => {
             if (document.cookie != "null") {
                 document.cookie = null

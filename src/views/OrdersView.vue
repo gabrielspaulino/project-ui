@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-      <OrdersPage :cart="this.cart" :cartItems="this.cartItems"/>
+      <OrdersPage/>
     </div>
   </template>
   
@@ -11,12 +11,6 @@
     name: 'OrdersView',
     components: {
         OrdersPage
-    },
-    data() {
-      return {
-        cart: this.$route.params.cart,
-        cartItems: this.$route.params.cartItems
-      }
     }
   }
   </script>

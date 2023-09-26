@@ -36,14 +36,6 @@ img {
   width: 300px;
   height: 100px;
   margin: 10px;
-}
-
-button {
-  background-color: white;
-  font-size: 1em;
-  color: blueviolet;
-  border: none;
-  border-radius: 5px;
-  margin-top: 10px;
+  margin-bottom: 0;
 }
 </style>

@@ -92,5 +92,9 @@ export default {
         width: 360px;
         border-radius: 10px;
         border: 2px solid blueviolet;
+        margin: 5px;
+    }
+    button {
+        margin: 5px;
     }
 </style>

@@ -1,11 +1,5 @@
 <template>
     <div class="box">
-      <div class="banner_high">
-        <div class="language">
-        <div class="flag"><img src="../assets/booksIcon.png" alt=""></div>
-        <div class="flag active"><img src="../assets/booksIcon.png" alt=""></div>
-      </div>
-      </div>
      
       <h1>Entrar</h1>
      
@@ -20,14 +14,6 @@
           <input :value="password" type="password" :name="string" placeholder="8 caracteres no mínimo" id="passwordInput" required/>
       </div>
       <div id="loginInfo"></div>
-    
-      </div>
-     
-      <div class="check_bar">
-        <div> <input type="checkbox" name="" id="">
-        <label for="">Lembrar-se de mim</label></div>
-       
-        <a href="">Esqueceu a senha?</a>
     
       </div>
     
@@ -48,7 +34,6 @@ const usersResponse = await response.json();
 export default {
   data() {
     return {
-      userLoggedIn: false,
       username:"",
       password: "",
     };

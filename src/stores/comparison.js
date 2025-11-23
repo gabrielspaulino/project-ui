@@ -48,7 +48,7 @@ export const useComparisonStore = defineStore('comparison', {
       this.error = null;
 
       try {
-        const response = await comparisonAPI.compare(this.productIds);
+        const response = await comparisonAPI.getComparison(this.productIds);
         this.comparisonData = response.data;
         return response.data;
       } catch (error) {

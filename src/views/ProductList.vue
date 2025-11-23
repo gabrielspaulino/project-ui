@@ -19,12 +19,9 @@
         <div class="filter-options">
           <select v-model="selectedCategory" @change="handleCategoryChange">
             <option value="">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="computers">Computers</option>
-            <option value="clothing">Clothing</option>
-            <option value="books">Books</option>
-            <option value="home">Home & Garden</option>
-            <option value="sports">Sports</option>
+            <option v-for="category in availableCategories" :key="category" :value="category">
+              {{ category }}
+            </option>
           </select>
 
           <div class="price-filter">
@@ -108,6 +105,7 @@ const loading = computed(() => productStore.loading);
 const error = computed(() => productStore.error);
 const filteredProducts = computed(() => productStore.filteredProducts);
 const pagination = computed(() => productStore.pagination);
+const availableCategories = computed(() => productStore.allCategories);
 
 const totalPages = computed(() => 
   Math.ceil(pagination.value.total / pagination.value.pageSize)
@@ -175,11 +173,12 @@ const nextPage = () => {
 }
 
 .filters-section {
-  background: white;
+  background: var(--card-bg);
   padding: 24px;
-  border-radius: 8px;
+  border-radius: 12px;
   margin-bottom: 32px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
 }
 
 .search-bar {
@@ -189,9 +188,11 @@ const nextPage = () => {
 .search-bar input {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 16px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 .filter-options {
@@ -203,9 +204,10 @@ const nextPage = () => {
 
 .filter-options select {
   padding: 10px 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   cursor: pointer;
   font-size: 14px;
 }
@@ -219,9 +221,15 @@ const nextPage = () => {
 .price-filter input {
   width: 120px;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   font-size: 14px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.price-filter span {
+  color: var(--text-secondary);
 }
 
 .products-grid {
@@ -244,8 +252,12 @@ const nextPage = () => {
 .no-products {
   text-align: center;
   padding: 60px 20px;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 18px;
+}
+
+.no-products p {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 768px) {
@@ -265,6 +277,10 @@ const nextPage = () => {
   
   .price-filter input {
     flex: 1;
+  }
+  
+  .btn-secondary {
+    width: 100%;
   }
 }
 </style>

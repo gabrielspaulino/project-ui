@@ -14,6 +14,13 @@
     
     <div class="product-info">
       <h3 class="product-name">{{ product.name }}</h3>
+      
+      <div v-if="productCategories.length > 0" class="product-categories">
+        <span v-for="category in productCategories" :key="category" class="category-badge">
+          {{ category }}
+        </span>
+      </div>
+      
       <p class="product-description">{{ truncateDescription(product.description) }}</p>
       
       <div class="product-rating">
@@ -28,7 +35,12 @@
       
       <div class="product-footer">
         <span class="product-price">${{ product.price?.toFixed(2) }}</span>
-        <button class="btn-primary" @click="viewDetails">View Details</button>
+        <div class="product-actions">
+          <button class="btn-cart" @click.stop="addToCart" title="Add to Cart">
+            🛒
+          </button>
+          <button class="btn-primary" @click="viewDetails">View</button>
+        </div>
       </div>
     </div>
   </div>
@@ -38,6 +50,7 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useComparisonStore } from '../stores/comparison';
+import { useCartStore } from '../stores/cart';
 
 const props = defineProps({
   product: {
@@ -48,13 +61,28 @@ const props = defineProps({
 
 const router = useRouter();
 const comparisonStore = useComparisonStore();
+const cartStore = useCartStore();
 
 const isInComparison = computed(() => 
   comparisonStore.selectedProducts.some(p => p.id === props.product.id)
 );
 
+const productCategories = computed(() => {
+  if (Array.isArray(props.product.categories)) {
+    return props.product.categories.map(cat => cat.name);
+  } else if (props.product.category) {
+    return [props.product.category];
+  }
+  return [];
+});
+
 const viewDetails = () => {
   router.push(`/products/${props.product.id}`);
+};
+
+const addToCart = () => {
+  cartStore.addItem(props.product, 1);
+  // Optional: Show toast notification
 };
 
 const toggleComparison = () => {
@@ -136,6 +164,22 @@ const truncateDescription = (text) => {
   color: #333;
 }
 
+.product-categories {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.category-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
 .product-description {
   color: #666;
   font-size: 14px;
@@ -183,21 +227,43 @@ const truncateDescription = (text) => {
 .product-price {
   font-size: 24px;
   font-weight: 700;
-  color: #007bff;
+  color: var(--primary-color);
+}
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-cart {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.btn-cart:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  transform: scale(1.1);
 }
 
 .btn-primary {
-  background: #007bff;
+  background: var(--primary-color);
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   transition: background 0.2s;
+  font-size: 14px;
 }
 
 .btn-primary:hover {
-  background: #0056b3;
+  background: var(--primary-hover);
 }
 </style>

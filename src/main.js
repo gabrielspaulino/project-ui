@@ -1,13 +1,16 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import LoginPage from './components/LoginPage.vue'
-import router from './router'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import router from './router';
+import App from './App.vue';
+import './main.css';
 
-const app = createApp(App)
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
-app.config.globalProperties.user = LoginPage.user
-app.use(router).mount('#app')
+const app = createApp(App);
 
-export function getApp() {
-    return app
-}
+app.use(pinia);
+app.use(router);
+
+app.mount('#app');

@@ -1,54 +1,41 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
-import OrdersView from '../views/OrdersView.vue'
-import SignUpView from '../views/SignUpView.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import ProductList from '../views/ProductList.vue';
+import ProductDetail from '../views/ProductDetail.vue';
+import ProductComparison from '../views/ProductComparison.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    redirect: '/products'
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/products',
+    name: 'ProductList',
+    component: ProductList
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView
+    path: '/products/:id',
+    name: 'ProductDetail',
+    component: ProductDetail,
+    props: true
   },
   {
-    path: '/signup',
-    name: 'signup',
-    component: SignUpView
-  },
-  {
-    path: '/orders',
-    name: 'orders',
-    component: OrdersView,
-    meta: {
-      cart: false
-    }
-  },
-  {
-    path: '/cart',
-    name: 'cart',
-    component: OrdersView,
-    meta: {
-      cart: true
-    }
-  },
-]
+    path: '/comparison',
+    name: 'ProductComparison',
+    component: ProductComparison
+  }
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  }
+});
 
-export default router
+export default router;

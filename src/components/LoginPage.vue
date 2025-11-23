@@ -11,7 +11,7 @@
       <div class="in">
       <label for="name">Senha</label>
       <div>
-          <input :value="password" type="password" :name="string" placeholder="8 caracteres no mínimo" id="passwordInput" required/>
+          <input :value="password" type="password" :name="string" placeholder="Senha" id="passwordInput" required/>
       </div>
       <div id="loginInfo"></div>
     

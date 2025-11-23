@@ -11,7 +11,7 @@
             <OrderCard :order="order"></OrderCard>
         </div>
     </div>
-    <button v-on:click="finalizeOrder()">Finalize order</button>
+    <button v-if="cart" v-on:click="finalizeOrder()">Finalize order</button>
 </template>
 
 <script>

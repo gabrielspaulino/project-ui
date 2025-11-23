@@ -4,7 +4,7 @@
       <div class="comparison-content">
         <div class="products-preview">
           <div v-for="product in selectedProducts" :key="product.id" class="product-chip">
-            <img :src="product.imageUrl || '/placeholder.jpg'" :alt="product.name" />
+            <img :src="product.imgUrl || '/placeholder.jpg'" :alt="product.name" />
             <span>{{ product.name }}</span>
             <button class="remove-btn" @click="removeProduct(product.id)">×</button>
           </div>
@@ -59,7 +59,7 @@ const goToComparison = () => {
   bottom: 0;
   left: 0;
   right: 0;
-  background: white;
+  background: var(--bg-primary);
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
   z-index: 1000;
   padding: 16px;
@@ -85,7 +85,7 @@ const goToComparison = () => {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f8f9fa;
+  background: var(--bg-primary);
   padding: 8px 12px;
   border-radius: 20px;
   white-space: nowrap;
@@ -127,7 +127,7 @@ const goToComparison = () => {
 
 .product-count {
   font-size: 14px;
-  color: #666;
+  color: var(--text-primary);
 }
 
 .btn-primary, .btn-secondary {
@@ -150,8 +150,8 @@ const goToComparison = () => {
 }
 
 .btn-secondary {
-  background: white;
-  color: #666;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   border: 1px solid #ddd;
 }
 

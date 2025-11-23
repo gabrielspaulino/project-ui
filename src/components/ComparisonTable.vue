@@ -10,7 +10,7 @@
             <th class="feature-column">Features</th>
             <th v-for="product in products" :key="product.id" class="product-column">
               <div class="product-header">
-                <img :src="product.imageUrl || '/placeholder.jpg'" :alt="product.name" />
+                <img :src="product.imgUrl || '/placeholder.jpg'" :alt="product.name" />
                 <div class="product-info">
                   <h3>{{ product.name }}</h3>
                   <p class="price">${{ product.price?.toFixed(2) }}</p>
@@ -125,9 +125,10 @@ const getFeatureValue = (product, featureName) => {
 
 .table-container {
   overflow-x: auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
 }
 
 table {
@@ -138,24 +139,25 @@ table {
 thead th {
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--card-bg);
   z-index: 10;
 }
 
 .feature-column {
   width: 200px;
   min-width: 200px;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   font-weight: 600;
   padding: 16px;
   text-align: left;
-  border-right: 2px solid #e0e0e0;
+  border-right: 2px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .product-column {
   min-width: 250px;
   padding: 16px;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid var(--border-color);
 }
 
 .product-header {
@@ -180,19 +182,20 @@ thead th {
 .product-info h3 {
   font-size: 16px;
   margin-bottom: 4px;
+  color: var(--text-primary);
 }
 
 .price {
   font-size: 20px;
   font-weight: 700;
-  color: #007bff;
+  color: var(--primary-color);
 }
 
 .remove-btn {
   position: absolute;
   top: 0;
   right: 0;
-  background: #dc3545;
+  background: var(--danger-color);
   color: white;
   border: none;
   width: 24px;
@@ -206,23 +209,25 @@ thead th {
 }
 
 tbody tr {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 tbody tr:hover {
-  background: #f8f9fa;
+  background: var(--hover-bg);
 }
 
 td {
   padding: 16px;
   text-align: center;
+  color: var(--text-primary);
 }
 
 .feature-name {
   text-align: left;
   font-weight: 600;
-  background: #f8f9fa;
-  border-right: 2px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border-right: 2px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .rating-cell {
@@ -251,31 +256,44 @@ td {
   justify-content: center;
   gap: 12px;
   padding: 20px;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
 }
 
 .btn-primary, .btn-secondary {
   padding: 10px 24px;
-  border-radius: 4px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   border: none;
+  transition: all 0.2s;
 }
 
 .btn-primary {
-  background: #007bff;
+  background: var(--primary-color);
   color: white;
 }
 
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
 .btn-secondary {
-  background: white;
-  border: 1px solid #ddd;
-  color: #666;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--hover-bg);
 }
 
 .loading, .error, .no-data {
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: var(--text-secondary);
+}
+
+.error {
+  color: var(--danger-color);
 }
 </style>

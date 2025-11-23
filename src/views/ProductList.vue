@@ -163,13 +163,13 @@ const nextPage = () => {
 
 .page-header h1 {
   font-size: 36px;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .subtitle {
   font-size: 18px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .filters-section {

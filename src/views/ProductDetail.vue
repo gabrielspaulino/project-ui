@@ -12,7 +12,7 @@
       <div v-else-if="product" class="product-detail">
         <div class="product-main">
           <div class="product-image-section">
-            <img :src="product.imageUrl || '/placeholder.jpg'" :alt="product.name" />
+            <img :src="product.imgUrl || '/placeholder.jpg'" :alt="product.name" />
           </div>
 
           <div class="product-info-section">

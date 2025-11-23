@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
     <div class="product-image">
-      <img :src="product.imageUrl || '/placeholder.jpg'" :alt="product.name" />
+      <img :src="product.imgUrl || '/placeholder.jpg'" :alt="product.name" />
       <button 
         class="compare-btn" 
         @click.stop="toggleComparison"
@@ -133,7 +133,7 @@ const truncateDescription = (text) => {
   position: absolute;
   top: 10px;
   right: 10px;
-  background: white;
+  background: var(--bg-secondary);
   border: 2px solid #007bff;
   color: #007bff;
   padding: 6px 12px;
@@ -161,7 +161,7 @@ const truncateDescription = (text) => {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .product-categories {
@@ -181,7 +181,7 @@ const truncateDescription = (text) => {
 }
 
 .product-description {
-  color: #666;
+  color: var(--text-primary);
   font-size: 14px;
   margin-bottom: 12px;
   line-height: 1.4;
@@ -210,11 +210,11 @@ const truncateDescription = (text) => {
 
 .rating-text {
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .review-count {
-  color: #666;
+  color: var(--text-primary);
   font-size: 14px;
 }
 

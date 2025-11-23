@@ -63,7 +63,7 @@ const goToProducts = () => {
 .back-button {
   background: none;
   border: none;
-  color: #007bff;
+  color: var(--primary-color);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -74,21 +74,22 @@ const goToProducts = () => {
 }
 
 .back-button:hover {
-  color: #0056b3;
+  color: var(--primary-hover);
 }
 
 .page-header h1 {
   font-size: 36px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .empty-state,
 .warning-state {
   text-align: center;
   padding: 80px 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
 }
 
 .empty-icon,
@@ -100,14 +101,14 @@ const goToProducts = () => {
 .empty-state h2,
 .warning-state h2 {
   font-size: 28px;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 16px;
 }
 
 .empty-state p,
 .warning-state p {
   font-size: 18px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 32px;
 }
 

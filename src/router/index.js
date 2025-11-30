@@ -6,20 +6,18 @@ import Checkout from '../views/Checkout.vue';
 import Orders from '../views/Orders.vue';
 import OrderDetail from '../views/OrderDetail.vue';
 import Login from '../views/Login.vue';
-//import Register from '../views/Register.vue';
-import Profile from '../views/Profile.vue';
+import Signup from '../views/SignUpView.vue';
 
 const routes = [
   { path: '/', redirect: '/products' },
-  { path: '/products', name: 'ProductList', component: ProductList },
-  { path: '/products/:id', name: 'ProductDetail', component: ProductDetail, props: true },
-  { path: '/comparison', name: 'ProductComparison', component: ProductComparison },
-  { path: '/checkout', name: 'Checkout', component: Checkout },
+  { path: '/products', name: 'ProductList', component: ProductList, meta: { requiresAuth: true } },
+  { path: '/products/:id', name: 'ProductDetail', component: ProductDetail, props: true, meta: { requiresAuth: true } },
+  { path: '/comparison', name: 'ProductComparison', component: ProductComparison, meta: { requiresAuth: true } },
+  { path: '/checkout', name: 'Checkout', component: Checkout, meta: { requiresAuth: true } },
   { path: '/orders', name: 'Orders', component: Orders, meta: { requiresAuth: true } },
   { path: '/orders/:id', name: 'OrderDetail', component: OrderDetail, props: true, meta: { requiresAuth: true } },
   { path: '/login', name: 'Login', component: Login },
-  //{ path: '/register', name: 'Register', component: Register },
-  { path: '/profile', name: 'Profile', component: Profile, meta: { requiresAuth: true } }
+  { path: '/register', name: 'Signup', component: Signup }
 ];
 
 const router = createRouter({
@@ -38,6 +36,9 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !isAuthenticated) {
     next('/login');
+  } else if (to.path === '/login' && isAuthenticated) {
+    // Redirect to products if already logged in
+    next('/products');
   } else {
     next();
   }

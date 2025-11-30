@@ -76,7 +76,7 @@ const handleLogin = async () => {
 
   try {
     await authStore.login({
-      email: form.value.email,
+      username: form.value.email,
       password: form.value.password
     });
     router.push('/products');

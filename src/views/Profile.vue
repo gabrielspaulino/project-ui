@@ -8,7 +8,7 @@
           <div class="profile-header">
             <div class="avatar">{{ userInitial }}</div>
             <div class="user-info">
-              <h2>{{ user?.name || 'Guest' }}</h2>
+              <h2>{{ user?.userName || 'Guest' }}</h2>
               <p>{{ user?.email || '' }}</p>
             </div>
           </div>

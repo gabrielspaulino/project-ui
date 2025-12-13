@@ -19,7 +19,7 @@
               <img :src="item.imageUrl || '/placeholder.jpg'" :alt="item.name" />
               <div class="item-details">
                 <h4>{{ item.name }}</h4>
-                <p class="item-price">${{ item.price.toFixed(2) }}</p>
+                <p class="item-price">${{ (item.price || 0).toFixed(2) }}</p>
                 <div class="quantity-controls">
                   <button @click="decreaseQuantity(item.productId)">−</button>
                   <span>{{ item.quantity }}</span>
@@ -127,6 +127,21 @@ const goToCheckout = () => {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide-enter-from .cart-sidebar,
+.slide-leave-to .cart-sidebar {
+  transform: translateX(100%);
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+.slide-enter-from,
+.slide-leave-to {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .cart-header {

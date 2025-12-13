@@ -157,7 +157,7 @@ const formatDate = (date) => {
   grid-template-columns: 200px 1fr;
   gap: 32px;
   padding: 24px;
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   border-radius: 8px;
   margin-bottom: 24px;
 }
@@ -169,7 +169,7 @@ const formatDate = (date) => {
 .rating-number {
   font-size: 48px;
   font-weight: 700;
-  color: #333;
+  color: (--text-primary);
 }
 
 .rating-bars {
@@ -187,7 +187,7 @@ const formatDate = (date) => {
 
 .rating-label {
   font-size: 14px;
-  color: #666;
+  color: var(--text-primary);
 }
 
 .rating-bar {
@@ -205,7 +205,7 @@ const formatDate = (date) => {
 
 .rating-count {
   font-size: 14px;
-  color: #666;
+  color: var(--text-primary);
   text-align: right;
 }
 
@@ -216,7 +216,7 @@ const formatDate = (date) => {
 }
 
 .review-item {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 20px;
 }
@@ -247,12 +247,12 @@ const formatDate = (date) => {
 
 .reviewer-name {
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .review-date {
   font-size: 14px;
-  color: #666;
+  color: var(--text-primary);
 }
 
 .review-content {
@@ -266,7 +266,7 @@ const formatDate = (date) => {
 }
 
 .review-text {
-  color: #666;
+  color: var(--text-primary);
   line-height: 1.6;
 }
 
@@ -276,13 +276,14 @@ const formatDate = (date) => {
 }
 
 .helpful-btn {
-  background: white;
+  background: var(--bg-secondary);
   border: 1px solid #e0e0e0;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s;
+  color: var(--text-primary);
 }
 
 .helpful-btn:hover {
@@ -296,7 +297,7 @@ const formatDate = (date) => {
 }
 
 .star {
-  color: #ddd;
+  color: var(--text-primary);
   font-size: 16px;
 }
 

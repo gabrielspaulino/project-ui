@@ -98,7 +98,7 @@
                 <div class="summary-divider"></div>
                 <div class="summary-row total">
                   <span>Total:</span>
-                  <span>${{ order.totalAmount?.toFixed(2) || '0.00' }}</span>
+                  <span>${{ order.total?.toFixed(2) || '0.00' }}</span>
                 </div>
               </div>
             </div>
@@ -110,7 +110,7 @@
                   <div class="timeline-dot"></div>
                   <div class="timeline-content">
                     <p class="timeline-title">Order Placed</p>
-                    <p class="timeline-date">{{ formatDate(order.createdAt) }}</p>
+                    <p class="timeline-date">{{ formatDate(order.moment) }}</p>
                   </div>
                 </div>
                 <div class="timeline-item" :class="{ active: isStatusActive('PROCESSING') }">

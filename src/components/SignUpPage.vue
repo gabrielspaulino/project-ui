@@ -88,8 +88,6 @@ export default {
           this.roles
         );
         
-        console.log('User created:', response.data);
-        
         // Success - redirect to login
         window.alert("User registered successfully. Login to your account.");
         this.$router.push({ path: '/login' });
@@ -129,6 +127,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px 20px;
   min-height: 80vh;
 }
 
@@ -136,9 +135,10 @@ export default {
   width: 100%;
   max-width: 400px;
   padding: 2rem;
-  border: 1px solid #ccc;
+  margin-top: 1rem;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(-bg--primary);
 }
 
 .in {
@@ -155,7 +155,7 @@ export default {
   padding: 0.75rem;
   font-size: 1rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
 }
 
 .log {
@@ -164,7 +164,7 @@ export default {
   font-size: 1rem;
   border-radius: 4px;
   border: none;
-  background-color: blueviolet;
+  background-color: var(--primary-color);
   color: white;
   cursor: pointer;
 }

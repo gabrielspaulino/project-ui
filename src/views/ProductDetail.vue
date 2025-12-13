@@ -24,8 +24,8 @@
                   ★
                 </span>
               </div>
-              <span class="rating-text">{{ product.averageRating?.toFixed(1) || '0.0' }}</span>
-              <span class="review-count">({{ product.reviewCount || 0 }} reviews)</span>
+              <span class="rating-text">{{ product.rating?.toFixed(1) || '0.0' }}</span>
+              <span class="review-count">({{ product.reviews.length || 0 }} reviews)</span>
             </div>
 
             <div class="product-price">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="product-actions">
-              <button class="btn-primary btn-large">Add to Cart</button>
+              <button class="btn-primary btn-large" @click.stop="addToCart">Add to Cart</button>
               <button 
                 class="btn-secondary btn-large" 
                 @click="toggleComparison"
@@ -75,11 +75,13 @@ import { useRouter, useRoute } from 'vue-router';
 import { useProductStore } from '../stores/products';
 import { useComparisonStore } from '../stores/comparison';
 import ProductReviews from '../components/ProductReviews.vue';
+import { useCartStore } from '../stores/cart';
 
 const router = useRouter();
 const route = useRoute();
 const productStore = useProductStore();
 const comparisonStore = useComparisonStore();
+const cartStore = useCartStore();
 
 const product = computed(() => productStore.currentProduct);
 const loading = computed(() => productStore.loading);
@@ -100,6 +102,10 @@ onMounted(async () => {
 
 const goBack = () => {
   router.push('/products');
+};
+
+const addToCart = () => {
+  cartStore.addItem(product, 1);
 };
 
 const toggleComparison = () => {
@@ -143,7 +149,7 @@ const toggleComparison = () => {
   grid-template-columns: 1fr 1fr;
   gap: 48px;
   margin-bottom: 60px;
-  background: white;
+  background: var(--secondary-color);
   padding: 32px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -159,7 +165,7 @@ const toggleComparison = () => {
 
 .product-title {
   font-size: 32px;
-  color: #333;
+  color: var(--text-primary);
   margin-bottom: 16px;
 }
 
@@ -176,7 +182,7 @@ const toggleComparison = () => {
 }
 
 .star {
-  color: #ddd;
+  color: var(--text-primary);
   font-size: 24px;
 }
 
@@ -187,11 +193,11 @@ const toggleComparison = () => {
 .rating-text {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .review-count {
-  color: #666;
+  color: var(--text-primary);
   font-size: 16px;
 }
 
@@ -204,7 +210,7 @@ const toggleComparison = () => {
 
 .product-category {
   font-size: 16px;
-  color: #666;
+  color: var(--text-primary);
   margin-bottom: 24px;
 }
 
@@ -215,12 +221,12 @@ const toggleComparison = () => {
 .product-description h3 {
   font-size: 20px;
   margin-bottom: 12px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .product-description p {
   line-height: 1.6;
-  color: #666;
+  color: var(--text-primary);
   font-size: 16px;
 }
 
@@ -250,7 +256,7 @@ const toggleComparison = () => {
 .product-features h3 {
   font-size: 20px;
   margin-bottom: 16px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .product-features ul {
@@ -259,7 +265,7 @@ const toggleComparison = () => {
 
 .product-features li {
   padding: 8px 0;
-  color: #666;
+  color: var(--text-primary);
   font-size: 16px;
 }
 

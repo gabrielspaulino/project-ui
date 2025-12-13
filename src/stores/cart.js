@@ -5,7 +5,8 @@ export const useCartStore = defineStore('cart', {
   state: () => ({
     items: [],
     loading: false,
-    error: null
+    error: null,
+    isCartOpen: false
   }),
 
   getters: {
@@ -66,6 +67,14 @@ export const useCartStore = defineStore('cart', {
 
     clearCart() {
       this.items = [];
+    },
+
+    toggleCart() {
+      this.isCartOpen = !this.isCartOpen;
+    },
+
+    closeCart() {
+      this.isCartOpen = false;
     },
 
     async checkout(orderData) {

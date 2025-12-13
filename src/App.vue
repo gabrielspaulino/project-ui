@@ -41,7 +41,7 @@
             </svg>
           </button>
           
-          <button class="icon-button cart-button" @click="toggleCart">
+          <button class="icon-button cart-button" @click="cartStore.toggleCart()">
             <span class="cart-icon">🛒</span>
             <span v-if="cartItemCount > 0" class="cart-badge">{{ cartItemCount }}</span>
           </button>
@@ -84,7 +84,7 @@
       <router-view />
     </main>
 
-    <CartSidebar :show="showCart" @close="closeCart" />
+    <CartSidebar :show="showCart" @close="cartStore.closeCart()" />
     <ComparisonBar />
   </div>
 </template>
@@ -104,15 +104,18 @@ const authStore = useAuthStore();
 const cartStore = useCartStore();
 
 const showUserMenu = ref(false);
-const showCart = ref(false);
 
 const hasComparisonProducts = computed(() => comparisonStore.hasProducts);
 const comparisonCount = computed(() => comparisonStore.selectedProducts.length);
 const isDark = computed(() => themeStore.isDark);
 const isAuthenticated = computed(() => authStore.isAuthenticated);
 const userName = computed(() => authStore.userName);
-const userInitial = computed(() => userName.value.charAt(0).toUpperCase());
+const userInitial = computed(() => {
+  const name = authStore.userName;
+  return name && name !== 'Guest' ? name.charAt(0).toUpperCase() : 'G';
+});
 const cartItemCount = computed(() => cartStore.itemCount);
+const showCart = computed(() => cartStore.isCartOpen);
 
 onMounted(() => {
   themeStore.initTheme();
@@ -140,14 +143,6 @@ const handleClickOutside = (event) => {
   if (!event.target.closest('.user-menu')) {
     showUserMenu.value = false;
   }
-};
-
-const toggleCart = () => {
-  showCart.value = !showCart.value;
-};
-
-const closeCart = () => {
-  showCart.value = false;
 };
 
 const handleLogout = () => {

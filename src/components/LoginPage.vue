@@ -1,74 +1,108 @@
 <template>
+  <div class="auth-container">
     <div class="box">
-     
       <h1>Entrar</h1>
-     
-      <div class="in">
-          <label for="name">E-Mail</label>
-          <div>  <input type="text" :value="username" placeholder="E-mail" id="emailInput"></div>
-      </div>
-    
-      <div class="in">
-      <label for="name">Senha</label>
-      <div>
-          <input :value="password" type="password" :name="string" placeholder="Senha" id="passwordInput" required/>
-      </div>
-      <div id="loginInfo"></div>
-    
-      </div>
-    
-    <div>
-        <button class="log" ref="submitButton">Entrar</button>
+      <form @submit.prevent="handleLogin">
+        <div class="in">
+          <label for="email">E-Mail</label>
+          <div><input type="email" v-model="email" placeholder="E-mail" id="emailInput" required /></div>
+        </div>
+        <div class="in">
+          <label for="password">Senha</label>
+          <div><input type="password" v-model="password" placeholder="Senha" id="passwordInput" required /></div>
+        </div>
+        <div id="loginInfo" v-if="errorMessage">{{ errorMessage }}</div>
+        <div>
+          <button class="log" type="submit" :disabled="loading">
+            {{ loading ? 'Entrando...' : 'Entrar' }}
+          </button>
+        </div>
+      </form>
+      <span>Ainda não tem conta? <a href="/signup">Se cadastrar</a> </span>
     </div>
-       
-    <span>Ainda não tem conta? <a href="/signup">Se cadastrar</a> </span> 
-    </div>
-    
+  </div>
 </template>
-    
-    
+
 <script>
-let response = await fetch('http://localhost:8080/users');
-const usersResponse = await response.json();
+import { useAuthStore } from '../stores/auth';
 
 export default {
   data() {
     return {
-      username:"",
+      email: "",
       password: "",
+      loading: false,
+      errorMessage: "",
     };
   },
-  mounted() {
-    document.getElementsByClassName("log")[0].addEventListener("click", () => {
-      this.username = document.getElementById("emailInput").value
-      this.password = document.getElementById("passwordInput").value
-      let user = usersResponse.find(user => user.email === this.username);
-      if (user) {
-        if (user.password !== this.password) {
-          document.getElementById("loginInfo").textContent = "Wrong password"
-        } else {
-          document.getElementById("loginInfo").textContent = ""
-          this.username = document.getElementById("emailInput").textContent = ""
-          this.password = document.getElementById("passwordInput").textContent = ""
-          document.cookie = user.id
-          window.location.href='/'
-        }
-      } else {
-          document.getElementById("loginInfo").textContent = "E-mail not registered"
+  methods: {
+    async handleLogin() {
+      this.loading = true;
+      this.errorMessage = "";
+      const authStore = useAuthStore();
+      try {
+        await authStore.login({ email: this.email, password: this.password });
+        this.$router.push('/');
+      } catch (error) {
+        this.errorMessage = "Failed to login. Please check your credentials.";
+        console.error('Login error:', error);
+      } finally {
+        this.loading = false;
       }
-    })
+    },
   },
 };
 </script>
 
 <style>
-button {
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.in {
+  margin-bottom: 1rem;
+}
+
+.in label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.in input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.log {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: none;
   background-color: blueviolet;
   color: white;
-  padding: 5px 15px;
+  cursor: pointer;
 }
+
 #loginInfo {
   color: red;
-  font-size: 10px
+  font-size: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 </style>

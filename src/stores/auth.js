@@ -1,6 +1,25 @@
 import { defineStore } from 'pinia';
 import apiClient from '../api/config';
 
+function decodeToken(token) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    const decoded = JSON.parse(jsonPayload);
+    return {
+      email: decoded.sub,
+      name: decoded.sub.split('@')[0]
+    };
+  } catch (error) {
+    console.error('Failed to decode token:', error);
+    return null;
+  }
+}
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
@@ -9,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   getters: {
-    userName: (state) => state.user?.username || state.user?.name || 'Guest',
+    userName: (state) => state.user?.name || 'Guest',
     userEmail: (state) => state.user?.email || ''
   },
 
@@ -18,7 +37,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await apiClient.post('/auth/login', credentials);
         this.token = response.data.token;
-        this.user = response.data.user;
+        this.user = decodeToken(this.token);
         this.isAuthenticated = true;
         localStorage.setItem('token', this.token);
         return response.data;
@@ -32,7 +51,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await apiClient.post('/auth/register', userData);
         this.token = response.data.token;
-        this.user = response.data.user;
+        this.user = decodeToken(this.token);
         this.isAuthenticated = true;
         localStorage.setItem('token', this.token);
         return response.data;
@@ -51,9 +70,11 @@ export const useAuthStore = defineStore('auth', {
 
     async fetchUser() {
       try {
-        const response = await apiClient.get('/auth/me');
-        this.user = response.data;
-        this.isAuthenticated = true;
+        const token = localStorage.getItem('token');
+        if (token) {
+          this.user = decodeToken(token);
+          this.isAuthenticated = true;
+        }
       } catch (error) {
         this.logout();
       }

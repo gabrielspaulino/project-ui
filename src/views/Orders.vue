@@ -19,7 +19,7 @@
           <div class="order-header">
             <div class="order-info">
               <h3>Order #{{ order.id }}</h3>
-              <p class="order-date">{{ formatDate(order.createdAt) }}</p>
+              <p class="order-date">{{ formatDate(order.moment) }}</p>
             </div>
             <div class="order-status" :class="getStatusClass(order.status)">
               {{ order.status }}
@@ -40,7 +40,7 @@
           <div class="order-footer">
             <div class="order-total">
               <span>Total:</span>
-              <span class="total-amount">${{ order.totalAmount?.toFixed(2) }}</span>
+              <span class="total-amount">${{ order.total?.toFixed(2) }}</span>
             </div>
             <button class="btn-primary" @click="viewOrderDetails(order.id)">
               View Details
@@ -56,8 +56,10 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { orderAPI } from '../api/orders';
+import { useAuthStore } from '../stores/auth';
 
 const router = useRouter();
+const authStore = useAuthStore();
 
 const orders = ref([]);
 const loading = ref(false);
@@ -73,7 +75,12 @@ const fetchOrders = async () => {
 
   try {
     const response = await orderAPI.getAll();
-    orders.value = response.data;
+    const currentUserEmail = authStore.user?.email;
+    if (currentUserEmail) {
+      orders.value = response.data.filter(order => order.client?.email === currentUserEmail);
+    } else {
+      orders.value = [];
+    }
   } catch (err) {
     error.value = 'Failed to load orders';
     console.error('Error fetching orders:', err);

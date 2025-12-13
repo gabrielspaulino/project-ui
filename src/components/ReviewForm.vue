@@ -98,7 +98,7 @@ const submitReview = async () => {
 
 <style scoped>
 .review-form {
-  background: #f8f9fa;
+  background: var(--bg-secondary);
   padding: 24px;
   border-radius: 8px;
   margin-bottom: 24px;
@@ -112,7 +112,7 @@ label {
   display: block;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .star-input {
@@ -122,7 +122,7 @@ label {
 
 .star-input .star {
   font-size: 32px;
-  color: #ddd;
+  color: var(--text-primary);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -135,7 +135,7 @@ label {
 input, textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--bg-primary);
   border-radius: 4px;
   font-size: 14px;
   font-family: inherit;
@@ -152,7 +152,7 @@ textarea {
 
 .btn-primary {
   background: #007bff;
-  color: white;
+  color: var(--text-primary);
   border: none;
   padding: 10px 24px;
   border-radius: 4px;
@@ -161,7 +161,7 @@ textarea {
 }
 
 .btn-primary:disabled {
-  background: #ccc;
+  background: var(--primary-color);
   cursor: not-allowed;
 }
 

@@ -82,7 +82,6 @@ const viewDetails = () => {
 
 const addToCart = () => {
   cartStore.addItem(props.product, 1);
-  // Optional: Show toast notification
 };
 
 const toggleComparison = () => {

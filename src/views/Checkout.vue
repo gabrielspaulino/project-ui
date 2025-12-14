@@ -33,6 +33,11 @@
                 <input v-model="form.address" type="text" required />
               </div>
 
+              <div class="form-group">
+                <label>Supplement</label>
+                <input v-model="form.notes" type="text"></input>
+              </div>
+
               <div class="form-row">
                 <div class="form-group">
                   <label>City *</label>
@@ -53,11 +58,6 @@
                   <label>Country *</label>
                   <input v-model="form.country" type="text" required />
                 </div>
-              </div>
-
-              <div class="form-group">
-                <label>Notes (Optional)</label>
-                <textarea v-model="form.notes" rows="3"></textarea>
               </div>
 
               <button 
@@ -112,9 +112,11 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
+import { useAuthStore } from '../stores/auth';
 
 const router = useRouter();
 const cartStore = useCartStore();
+const authStore = useAuthStore();
 
 const loading = ref(false);
 const error = ref(null);
@@ -135,6 +137,7 @@ const items = computed(() => cartStore.items);
 const hasItems = computed(() => cartStore.hasItems);
 const subtotal = computed(() => cartStore.subtotal);
 const total = computed(() => cartStore.total);
+const user = computed(() => authStore.user);
 
 const handleSubmit = async () => {
   loading.value = true;
@@ -142,17 +145,22 @@ const handleSubmit = async () => {
 
   try {
     const orderData = {
-      shippingAddress: {
-        fullName: form.value.fullName,
+      moment: new Date().toISOString().split('.')[0] + 'Z',
+      orderStatus: 'WAITING_PAYMENT',
+      client: user.value,
+      address: {
         address: form.value.address,
+        supplement: form.value.notes,
         city: form.value.city,
         state: form.value.state,
-        zipCode: form.value.zipCode,
-        country: form.value.country
+        country: form.value.country,
+        zipCode: form.value.zipCode
       },
-      contactEmail: form.value.email,
-      contactPhone: form.value.phone,
-      notes: form.value.notes
+      items: items.value.map(item => ({
+        quantity: item.quantity,
+        price: item.price,
+        product: { id: item.productId }
+      }))
     };
 
     const order = await cartStore.checkout(orderData);

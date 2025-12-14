@@ -82,19 +82,8 @@ export const useCartStore = defineStore('cart', {
       this.error = null;
 
       try {
-        // Prepare order items from cart
-        const orderItems = this.items.map(item => ({
-          productId: item.productId,
-          quantity: item.quantity,
-          price: item.price
-        }));
-
         // Create order
-        const response = await orderAPI.create({
-          ...orderData,
-          items: orderItems,
-          totalAmount: this.total
-        });
+        const response = await orderAPI.create(orderData);
 
         // Clear cart after successful order
         this.clearCart();

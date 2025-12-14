@@ -1,11 +1,6 @@
 <template>
   <div class="product-list-page">
     <div class="container">
-      <div class="page-header">
-        <h1>Products</h1>
-        <p class="subtitle">Discover our amazing collection</p>
-      </div>
-
       <div class="filters-section">
         <div class="search-bar">
           <input 

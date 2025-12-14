@@ -14,7 +14,7 @@
           <div class="header-top">
             <div>
               <h1>Order #{{ order.id }}</h1>
-              <p class="order-date">Placed on {{ formatDate(order.createdAt) }}</p>
+              <p class="order-date">Placed on {{ formatDate(order.moment) }}</p>
             </div>
             <div class="order-status" :class="getStatusClass(order.status)">
               {{ order.status }}

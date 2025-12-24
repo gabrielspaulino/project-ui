@@ -13,7 +13,7 @@
         <div class="order-header-section card">
           <div class="header-top">
             <div>
-              <h1>Order #{{ order.id }}</h1>
+              <h1>Order placed successfully!</h1>
               <p class="order-date">Placed on {{ formatDate(order.moment) }}</p>
             </div>
             <div class="order-status" :class="getStatusClass(order.status)">

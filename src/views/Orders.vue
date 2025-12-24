@@ -18,8 +18,7 @@
         <div v-for="order in orders" :key="order.id" class="order-card card">
           <div class="order-header">
             <div class="order-info">
-              <h3>Order #{{ order.id }}</h3>
-              <p class="order-date">{{ formatDate(order.moment) }}</p>
+              <h3>{{ formatDate(order.moment) }}</h3>
             </div>
             <div class="order-status" :class="getStatusClass(order.status)">
               {{ order.status }}
